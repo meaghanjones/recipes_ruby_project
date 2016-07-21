@@ -33,11 +33,13 @@
 
 <div class="container">
   <div class="col-sm-6">
+
     <form class="well" action="/ingredients" method="post">
       <label for="ingredient_name">New ingredient</label>
       <input id="ingredient_name" name="ingredient_name" type="text">
       <button type="submit" name="new_ingredient">Add an Ingredient!</button>
     </form>
+
     <form class="well" action="/add_ingredients_to_recipe" method="post">
       <input type="hidden" name="_method" value="patch">
       <div>
@@ -57,7 +59,7 @@
       <div>
         <h3>to make this Recipe</h3>
         <% if @recipes.any?() %>
-          <select class="form-control" name="in_this_recipe">
+          <select class="form-control" name="ingredients_in_this_recipe">
             <% @recipes.each() do |recipe| %>
               <option value="<%= recipe.id() %>"><%= recipe.name() %></option>
             <% end %>
@@ -69,5 +71,41 @@
       </div>
     </form>
   </div>
-</div>
-<br>
+
+<div>
+  <form action="/categories" method="post">
+    <label for="category_name">New category</label>
+    <input id="category_name" name="category_name" type="text">
+    <button type="submit" name="new_category">Add a new Category!</button>
+  </form>
+  <form class="well" action="/categories/edit" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <div>
+      <h3>Use these categories...</h3>
+      <% if @categories.any?() %>
+          <% @categories.each() do |category| %>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="categories_ids[]" value="<%= category.id() %>"><%= category.name()%>
+              </label>
+            </div>
+          <% end %>
+      <% else %>
+        <h4>Add categories to the list, please.</h4>
+      <% end %>
+    </div>
+    <div>
+      <h3>to make this Recipe</h3>
+      <% if @recipes.any?() %>
+        <select class="form-control" name="categories_in_this_recipe">
+          <% @recipes.each() do |recipe| %>
+            <option value="<%= recipe.id() %>"><%= recipe.name() %></option>
+          <% end %>
+        </select>
+      <% else %>
+        <h4>No Recipes created yet</h4>
+      <% end %>
+      <button type="submit" class="btn btn-lg btn-success">Add category to recipe</button>
+    </form>
+    </div>
+  </div>

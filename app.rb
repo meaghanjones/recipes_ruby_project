@@ -9,6 +9,7 @@ end
 get("/recipes") do
   @recipes = Recipe.all()
   @ingredients = Ingredient.all()
+  @categories = Category.all()
   erb(:new_recipe_form)
 end
 
@@ -32,12 +33,26 @@ delete("/recipes/:id/delete") do
   redirect("/recipes")
 end
 
+patch '/categories/edit' do
+  recipe_id = params.fetch("categories_in_this_recipe").to_i()
+  recipe = Recipe.find(recipe_id)
+  categories_ids = params.fetch("categories_ids")
+  recipe.update({:category_ids => categories_ids})
+  redirect("/recipes")
+end
+
+post '/categories' do
+  name = params.fetch("category_name")
+  Ingredient.create({:name => name, :id => nil})
+  redirect("/recipes")
+end
+
 patch '/add_ingredients_to_recipe' do
-  recipe_id = params.fetch("in_this_recipe").to_i()
+  recipe_id = params.fetch("ingredients_in_this_recipe").to_i()
   recipe = Recipe.find(recipe_id)
   ingredients_ids = params.fetch("ingredients_ids")
   recipe.update({:ingredient_ids => ingredients_ids})
-  redirect to '/recipes'
+  redirect('/recipes')
 end
 
 post("/ingredients") do
