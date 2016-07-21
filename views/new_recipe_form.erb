@@ -49,7 +49,7 @@
       <div>
         <h3>Select a Recipe to add items to</h3>
         <% if @recipes.any?() %>
-          <select class="form-control" name="using_these">
+          <select class="form-control" name="in_this_recipe">
             <% @recipes.each() do |recipe| %>
               <option value="<%= recipe.id() %>"><%= recipe.name() %></option>
             <% end %>

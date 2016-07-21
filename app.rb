@@ -21,15 +21,10 @@ post("/recipes/new") do
 end
 
 patch '/add_ingredients_to_recipe' do
-  ingredients =[]
+  recipe_id = params.fetch("in_this_recipe").to_i()
+  recipe = Recipe.find(recipe_id)
   ingredients_ids = params.fetch("ingredients_ids")
-  recipe_id = params.fetch("using_these").to_i()
-  ingredients_id.each() do |ingredients_id|
-    recipe_id << Recipe.find(ingredients_id)
-  end
-  ingredients.each() do |ingredient|
-    ingredient.update({:name => :name, :recipe_id => recipe_id})
-  end
+  recipe.update({:ingredient_ids => ingredients_ids})
   redirect to '/recipes'
 end
 
