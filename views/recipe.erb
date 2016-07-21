@@ -1,0 +1,7 @@
+<h3>A list of all Ingredients for <%= @recipe.name %> </h3>
+<ul>
+<% @ingredients_ids.each() do |ingredients_id| %>
+  <li><%= ingredients_id.name() %><br>
+  </li>
+<% end %>
+</ul>

@@ -3,12 +3,20 @@
   <% if @recipes.any?() %>
     <ul>
       <% @recipes.each() do |recipe| %>
-        <li>Rank: <%= recipe.rank() %> || <a href="/recipes/<%= recipe.id() %>"><span class="hecka"> <%= recipe.name() %></a> || Instructions: <%= recipe.instructions() %></li>
-      <% end %>
-    </ul>
-  <% else %>
-    <h4>No Recipes created yet</h4>
-  <% end %>
+        <li>Rank: <%= recipe.rank() %> || <a href="/recipes/<%= recipe.id() %>"><span class="hecka"> <%= recipe.name() %></a> || <ul><li> Instructions: <%= recipe.instructions() %> </li><li>Ingredients:
+
+          <% recipe.ingredients.each() do |ingredient| %>
+            <ul>
+              <li><%= ingredient.name() %></li>
+            </ul>
+          <% end %>
+
+        </li></ul>
+     <% end %>
+   </ul>
+   <% end %>
+
+
   <h2>Add a new Recipe</h2>
   <form action="/recipes/new" method="post" class="well">
   <ul>
@@ -24,16 +32,16 @@
 </div>
 
 <div class="container">
-  <form action="/ingredients" method="post">
-    <label for="ingredient_name">New ingredient</label>
-    <input id="ingredient_name" name="ingredient_name" type="text">
-    <button type="submit" name="new_ingredient">New Ingredient?</button>
-  </form>
   <div class="col-sm-6">
+    <form class="well" action="/ingredients" method="post">
+      <label for="ingredient_name">New ingredient</label>
+      <input id="ingredient_name" name="ingredient_name" type="text">
+      <button type="submit" name="new_ingredient">Add an Ingredient!</button>
+    </form>
     <form class="well" action="/add_ingredients_to_recipe" method="post">
       <input type="hidden" name="_method" value="patch">
       <div>
-        <h3>Use these ingredients!</h3>
+        <h3>Use these ingredients...</h3>
         <% if @ingredients.any?() %>
             <% @ingredients.each() do |ingredient| %>
               <div class="checkbox">
@@ -47,7 +55,7 @@
         <% end %>
       </div>
       <div>
-        <h3>Select a Recipe to add items to</h3>
+        <h3>to make this Recipe</h3>
         <% if @recipes.any?() %>
           <select class="form-control" name="in_this_recipe">
             <% @recipes.each() do |recipe| %>
@@ -57,8 +65,8 @@
         <% else %>
           <h4>No Recipes created yet</h4>
         <% end %>
+        <button type="submit" class="btn btn-lg btn-success">Add ingredient to recipe</button>
       </div>
-      <button type="submit" class="btn btn-lg btn-success">Add ingredient to recipe</button>
     </form>
   </div>
 </div>
