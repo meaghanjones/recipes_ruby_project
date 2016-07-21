@@ -1,7 +1,15 @@
-<h3>A list of all Ingredients for <%= @recipe.name %> </h3>
+<div class="container">
+<h3>Recipe for <%= @recipe.name %> </h3>
 <ul>
-<% @ingredients_ids.each() do |ingredients_id| %>
-  <li><%= ingredients_id.name() %><br>
+<% @recipe.ingredients.each() do |ingredient| %>
+  <li><%= ingredient.name() %><br>
   </li>
 <% end %>
 </ul>
+
+<h1>Delete This Recipe</h1>
+<form action="/recipes/<%= @recipe.id() %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn btn-lg btn-warning">Delete</button>
+</form>
+</div>
