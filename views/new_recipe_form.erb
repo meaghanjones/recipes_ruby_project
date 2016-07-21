@@ -1,20 +1,65 @@
-<h2>Add a new Recipe</h2>
-<form action="/ingredients" method="post">
-  <label for="ingredient_name">Ingredients</label>
-  <input id="ingredient_name" name="ingredient_name" type="text">
-</form>
+<div class="col-sm-6">
+  <h3><span class="glyphicon glyphicon-edit"></span>List of current Recipes</h3>
+  <% if @recipes.any?() %>
+    <ul>
+      <% @recipes.each() do |recipe| %>
+        <li>Rank: <%= recipe.rank() %> || <a href="/recipes/<%= recipe.id() %>"><span class="hecka"> <%= recipe.name() %></a> || Instructions: <%= recipe.instructions() %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <h4>No Recipes created yet</h4>
+  <% end %>
+  <h2>Add a new Recipe</h2>
+  <form action="/recipes/new" method="post" class="well">
+  <ul>
+    <li><label for="name">Recipe Name</label><br>
+    <input id="name" name="name" type="text"></li>
+    <li><label for="rank">Rank</label><br>
+    <input id="rank" name="rank" type="text"></li>
+    <li><label for="instructions">Instructions</label><br>
+    <input id="instructions" name="instructions" type="text"></li>
+    <li><button type="submit">Add Recipe</button></li>
+  </ul>
+  </form>
+</div>
 
-
-
-<form action="/recipes" method="post">
-  <label for="name">Recipe Name</label>
-  <input id="name" name="name" type="text">
-
-  <label for="rank">Rank</label>
-  <input id="rank" name="rank" type="text">
-
-  <label for="instructions">Instructions</label>
-  <input id="instructions" name="instructions" type="text">
-
-  <button type="submit">Add Recipe</button>
-</form>
+<div class="container">
+  <form action="/ingredients" method="post">
+    <label for="ingredient_name">New ingredient</label>
+    <input id="ingredient_name" name="ingredient_name" type="text">
+    <button type="submit" name="new_ingredient">New Ingredient?</button>
+  </form>
+  <div class="col-sm-6">
+    <form class="well" action="/add_ingredients_to_recipe" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <div>
+        <h3>Use these ingredients!</h3>
+        <% if @ingredients.any?() %>
+            <% @ingredients.each() do |ingredient| %>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="ingredients_ids[]" value="<%= ingredient.id() %>"><%= ingredient.name()%>
+                </label>
+              </div>
+            <% end %>
+        <% else %>
+          <h4>Add ingredients to the list, please.</h4>
+        <% end %>
+      </div>
+      <div>
+        <h3>Select a Recipe to add items to</h3>
+        <% if @recipes.any?() %>
+          <select class="form-control" name="using_these">
+            <% @recipes.each() do |recipe| %>
+              <option value="<%= recipe.id() %>"><%= recipe.name() %></option>
+            <% end %>
+          </select>
+        <% else %>
+          <h4>No Recipes created yet</h4>
+        <% end %>
+      </div>
+      <button type="submit" class="btn btn-lg btn-success">Add ingredient to recipe</button>
+    </form>
+  </div>
+</div>
+<br>

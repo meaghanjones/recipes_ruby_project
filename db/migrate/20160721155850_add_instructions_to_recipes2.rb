@@ -1,4 +1,4 @@
-class AddInstructionsToRecipes < ActiveRecord::Migration
+class AddInstructionsToRecipes2 < ActiveRecord::Migration
   def change
     add_column(:recipes, :instructions, :string)
   end
