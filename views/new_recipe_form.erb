@@ -81,7 +81,8 @@
   <form class="well" action="/categories/edit" method="post">
     <input type="hidden" name="_method" value="patch">
     <div>
-      <h3>Use these categories...</h3>
+      <h3>Categorize your recipes</h3>
+      <div>
       <% if @categories.any?() %>
           <% @categories.each() do |category| %>
             <div class="checkbox">
@@ -95,7 +96,7 @@
       <% end %>
     </div>
     <div>
-      <h3>to make this Recipe</h3>
+      <h3>to organize these recipes</h3>
       <% if @recipes.any?() %>
         <select class="form-control" name="categories_in_this_recipe">
           <% @recipes.each() do |recipe| %>

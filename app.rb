@@ -43,7 +43,7 @@ end
 
 post '/categories' do
   name = params.fetch("category_name")
-  Ingredient.create({:name => name, :id => nil})
+  Category.create({:name => name, :id => nil})
   redirect("/recipes")
 end
 
